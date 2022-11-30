@@ -15,4 +15,13 @@ public class UserExceptionHandler {
 				HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(userException, HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(value = {UserBadRequestException.class})
+	public ResponseEntity<Object> handleUserBadRequestException(UserBadRequestException userBadRequestException){
+		UserException userException = new UserException(
+				userBadRequestException.getMessage(),
+				userBadRequestException.getCause(),
+				HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(userException, HttpStatus.BAD_REQUEST);
+	}
 }

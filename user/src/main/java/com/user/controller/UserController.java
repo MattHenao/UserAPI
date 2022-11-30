@@ -42,7 +42,7 @@ public class UserController {
 		actualUser.setEmail(user.getEmail());
 		actualUser.setPassword(user.getPassword());
 
-		return userService.save(actualUser);
+		return userService.update(actualUser);
 	}
 	
 	@GetMapping
@@ -52,6 +52,6 @@ public class UserController {
 	
 	@DeleteMapping("/{id}")
 	public void deleteUser(@PathVariable Integer id) {
-		userService.deleteById(id);
+		userService.delete(id);
 	}
 }

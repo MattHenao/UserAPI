@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.user.dao.UserDao;
+import com.user.exception.UserBadRequestException;
 import com.user.exception.UserNotFoundException;
 import com.user.model.User;
 
@@ -19,8 +20,14 @@ public class UserServiceImp implements UserService{
 	@Transactional(readOnly = false)
 	public User save(User user) {
 		if(user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
-			throw new UserNotFoundException("Mandatory parameters not entered");
+			throw new UserBadRequestException("Mandatory parameters not entered");
 		}
+		return userDao.save(user);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public User update(User user) {
 		return userDao.save(user);
 	}
 
@@ -34,7 +41,7 @@ public class UserServiceImp implements UserService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public void deleteById(Integer id) {
+	public void delete(Integer id) {
 		if(userDao.findById(id).isEmpty()) {
 			throw new UserNotFoundException("Requested user does not exist");
 		}

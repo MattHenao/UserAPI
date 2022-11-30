@@ -13,25 +13,27 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "user")
-@SQLDelete(sql = "UPDATE User SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE user SET deleted = true WHERE id=?")
 @Where(clause = "deleted = false")
 
 public class User implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy  = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String username;
 	private String email;
 	private String password;
-	private Boolean deleted = Boolean.FALSE;
+	private boolean deleted = Boolean.FALSE; //FALSE = not deleted, TRUE = deleted
 	
-	public User(Integer id, String username, String email, String password, Boolean deleted) {
+	public User() {
+		
+	}
+	public User(Integer id, String username, String email, String password) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.deleted = deleted;
 	}
 	
 	public Integer getId() {
@@ -66,7 +68,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
-	public boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 	
